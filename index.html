@@ -99,8 +99,8 @@ section{position:relative}
 /* ---------- hero ---------- */
 .hero{padding-top:clamp(120px,16vw,170px);padding-bottom:clamp(64px,8vw,96px);overflow:hidden}
 .hero::before{content:"";position:absolute;inset:0;background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:64px 64px;mask-image:radial-gradient(ellipse 80% 70% at 60% 30%,#000 20%,transparent 75%);-webkit-mask-image:radial-gradient(ellipse 80% 70% at 60% 30%,#000 20%,transparent 75%);opacity:.55;pointer-events:none}
-.swarm{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;mask-image:linear-gradient(90deg,rgba(0,0,0,.28) 0%,rgba(0,0,0,.45) 35%,#000 60%);-webkit-mask-image:linear-gradient(90deg,rgba(0,0,0,.28) 0%,rgba(0,0,0,.45) 35%,#000 60%)}
-@media (max-width:980px){.swarm{mask-image:linear-gradient(180deg,rgba(0,0,0,.35),#000 70%);-webkit-mask-image:linear-gradient(180deg,rgba(0,0,0,.35),#000 70%)}}
+.swarm{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+main,footer{position:relative;z-index:1}
 .hero-grid{position:relative;display:grid;grid-template-columns:1.25fr .9fr;gap:clamp(32px,6vw,72px);align-items:center}
 .status{display:inline-flex;align-items:center;flex-wrap:wrap;gap:8px 14px;margin-bottom:30px;padding-bottom:10px;font-family:var(--f-mono);font-size:12.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);background:linear-gradient(var(--line-2),var(--line-2)) left bottom/100% 1px no-repeat}
 .status .past[hidden],.status .sep[hidden]{display:none}
@@ -419,6 +419,7 @@ footer{border-top:1px solid var(--line);padding-block:56px calc(40px + env(safe-
   </defs>
 </svg>
 
+<canvas class="swarm" id="swarm" aria-hidden="true"></canvas>
 <div class="progress" aria-hidden="true"></div>
 
 <header class="nav" id="nav">
@@ -453,7 +454,6 @@ footer{border-top:1px solid var(--line);padding-block:56px calc(40px + env(safe-
 
 <!-- HERO -->
 <section class="hero" id="hero">
-  <canvas class="swarm" id="swarm" aria-hidden="true"></canvas>
   <div class="wrap hero-grid">
     <div>
       <a href="#kontakt" class="status fade-up" style="animation-delay:.05s">
@@ -782,8 +782,10 @@ footer{border-top:1px solid var(--line);padding-block:56px calc(40px + env(safe-
           <h2 style="margin-top:18px">Masz pomysł? Napisz <span class="free">kilka zdań.</span></h2>
           <p class="lead">Dwa pola i gotowe. Odezwę się, żeby porozmawiać o szczegółach.</p>
 
-          <form name="kontakt" method="POST" id="form" novalidate>
-            <p class="hp"><label>Nie wypełniaj: <input name="_honey" id="hp" tabindex="-1" autocomplete="off"></label></p>
+          <form name="kontakt" method="POST" data-netlify="true" netlify-honeypot="bot-field" id="form" novalidate>
+            <input type="hidden" name="form-name" value="kontakt">
+            <input type="hidden" name="subject" value="Nowe zgłoszenie z mogetopomoge.pl">
+            <p class="hp"><label>Nie wypełniaj: <input name="bot-field" id="hp" tabindex="-1" autocomplete="off"></label></p>
             <div class="field">
               <label for="msg">Czego potrzebujesz?</label>
               <div class="quick" id="quick" aria-label="Szybki wybór">
@@ -977,34 +979,35 @@ footer{border-top:1px solid var(--line);padding-block:56px calc(40px + env(safe-
   addEventListener('scroll', function(){ requestAnimationFrame(focusPhoto) }, {passive:true});
   addEventListener('resize', focusPhoto); focusPhoto();
 
-  /* rój nanobotów w hero: dryfuje, krąży wokół kursora, nie podchodzi bliżej niż ~40 px */
+  /* rój nanobotów na całej stronie: dryfuje z lekką paralaksą, krąży wokół kursora, nie podchodzi bliżej niż ~40 px */
   (function(){
     var cv = d.getElementById('swarm'); if (!cv || !cv.getContext) return;
-    var ctx = cv.getContext('2d'), W = 0, H = 0, P = [], NUM = fine ? 520 : 200;
-    var mouse = {x:0, y:0, on:false}, running = false, visible = true, raf = 0, t0 = performance.now();
-    function seed(){
-      P = [];
-      for (var i=0;i<NUM;i++){
-        var hx = .12 + .88*Math.sqrt(Math.random()), hy = Math.random();
-        P.push({hx:hx, hy:hy, x:hx*W, y:hy*H, vx:0, vy:0,
-          s: Math.random()<.12 ? 2.4 : 1.2 + Math.random()*1.1,
-          a: .12 + Math.random()*.4, blue: Math.random()<.2,
-          ph: Math.random()*6.283, r0: 46 + Math.random()*110, dir: Math.random()<.5?-1:1, sp: .35 + Math.random()*.7});
-      }
+    var ctx = cv.getContext('2d'), W = 0, H = 0, P = [];
+    var mouse = {x:0, y:0, on:false}, running = false, raf = 0, t0 = performance.now(), sy = scrollY;
+    function count(){ return Math.round(Math.min(fine ? 560 : 180, W*H / (fine ? 2300 : 2600))); }
+    function mk(){
+      return {hx:Math.random(), hy:Math.random(), x:0, y:0, vx:0, vy:0, depth:.06 + Math.random()*.22,
+        s: Math.random()<.12 ? 2.4 : 1.2 + Math.random()*1.1, a: .1 + Math.random()*.34, blue: Math.random()<.2,
+        ph: Math.random()*6.283, r0: 46 + Math.random()*110, dir: Math.random()<.5?-1:1, sp: .35 + Math.random()*.7};
+    }
+    function home(p, t){
+      var y = p.hy*H - sy*p.depth; y = ((y % H) + H) % H;
+      return [p.hx*W + Math.sin(t*.00035*p.sp + p.ph)*16, y + Math.cos(t*.00042*p.sp + p.ph*1.3)*16];
     }
     function resize(){
-      var r = hero.getBoundingClientRect(), dpr = Math.min(window.devicePixelRatio||1, 2);
-      W = r.width; H = r.height; cv.width = Math.round(W*dpr); cv.height = Math.round(H*dpr);
+      var dpr = Math.min(window.devicePixelRatio||1, 2);
+      W = innerWidth; H = innerHeight; cv.width = Math.round(W*dpr); cv.height = Math.round(H*dpr);
       ctx.setTransform(dpr,0,0,dpr,0,0);
-      if (!P.length) seed();
+      var n = count();
+      while (P.length < n){ var p = mk(), hm = home(p, 0); p.x = hm[0]; p.y = hm[1]; P.push(p); }
+      P.length = n;
       if (reduce) draw(performance.now());
     }
     function draw(now){
-      var t = now - t0; ctx.clearRect(0,0,W,H);
-      var R = 260;
+      var t = now - t0, R = 260; ctx.clearRect(0,0,W,H); sy = scrollY;
       for (var i=0;i<P.length;i++){
-        var p = P[i];
-        var tx = p.hx*W + Math.sin(t*.00035*p.sp + p.ph)*16, ty = p.hy*H + Math.cos(t*.00042*p.sp + p.ph*1.3)*16, w = 0;
+        var p = P[i], hm = home(p, t), tx = hm[0], ty = hm[1], w = 0;
+        if (Math.abs(ty - p.y) > H*.6){ p.y = ty; p.vy = 0; }
         if (mouse.on){
           var dx = p.x - mouse.x, dy = p.y - mouse.y, dist = Math.sqrt(dx*dx + dy*dy);
           if (dist < R){
@@ -1015,10 +1018,8 @@ footer{border-top:1px solid var(--line);padding-block:56px calc(40px + env(safe-
             if (dist < 40){ var f = (40-dist)/40*1.4; p.vx += dx/(dist||1)*f; p.vy += dy/(dist||1)*f; }
           }
         }
-        if (!reduce){
-          p.vx += (tx - p.x) * .011; p.vy += (ty - p.y) * .011;
-          p.vx *= .9; p.vy *= .9; p.x += p.vx; p.y += p.vy;
-        }
+        if (reduce){ p.x = tx; p.y = ty; }
+        else { p.vx += (tx - p.x) * .011; p.vy += (ty - p.y) * .011; p.vx *= .9; p.vy *= .9; p.x += p.vx; p.y += p.vy; }
         ctx.globalAlpha = Math.min(1, p.a + w*.55);
         ctx.fillStyle = p.blue || w > .55 ? '#5b8cff' : '#c3cde6';
         ctx.fillRect(p.x, p.y, p.s, p.s);
@@ -1026,18 +1027,18 @@ footer{border-top:1px solid var(--line);padding-block:56px calc(40px + env(safe-
       ctx.globalAlpha = 1;
     }
     function loop(now){ draw(now); raf = requestAnimationFrame(loop); }
-    function start(){ if (!running && visible && !reduce && !d.hidden){ running = true; raf = requestAnimationFrame(loop); } }
+    function start(){ if (!running && !reduce && !d.hidden){ running = true; raf = requestAnimationFrame(loop); } }
     function stop(){ running = false; cancelAnimationFrame(raf); }
     resize(); start();
-    addEventListener('resize', function(){ resize(); });
-    new IntersectionObserver(function(es){ visible = es[0].isIntersecting; visible ? start() : stop(); }).observe(hero);
+    addEventListener('resize', resize);
+    if (reduce) addEventListener('scroll', function(){ requestAnimationFrame(function(){ draw(performance.now()) }) }, {passive:true});
     d.addEventListener('visibilitychange', function(){ d.hidden ? stop() : start(); });
-    hero.addEventListener('pointermove', function(e){ var r = hero.getBoundingClientRect(); mouse.x = e.clientX - r.left; mouse.y = e.clientY - r.top; mouse.on = true; });
-    hero.addEventListener('pointerleave', function(){ mouse.on = false; });
-    hero.addEventListener('pointerdown', function(e){
-      var r = hero.getBoundingClientRect(), mx = e.clientX - r.left, my = e.clientY - r.top;
+    addEventListener('pointermove', function(e){ if (e.pointerType === 'mouse'){ mouse.x = e.clientX; mouse.y = e.clientY; mouse.on = true; } }, {passive:true});
+    d.documentElement.addEventListener('pointerleave', function(){ mouse.on = false; });
+    addEventListener('pointerdown', function(e){
+      var mx = e.clientX, my = e.clientY;
       for (var i=0;i<P.length;i++){ var p = P[i], dx = p.x-mx, dy = p.y-my, dd = Math.sqrt(dx*dx+dy*dy); if (dd < 220){ var f = (220-dd)/220*9; p.vx += dx/(dd||1)*f; p.vy += dy/(dd||1)*f; } }
-    });
+    }, {passive:true});
   })();
 
   /* FAQ */
@@ -1096,8 +1097,15 @@ footer{border-top:1px solid var(--line);padding-block:56px calc(40px + env(safe-
     var c = contactIn.value.trim();
     if (!/@/.test(c) && c.replace(/\D/g,'').length < 9){ err.textContent='Podaj numer telefonu (9 cyfr) albo adres e-mail, żebym mógł odpowiedzieć.'; contactIn.focus(); return; }
     send.classList.add('loading'); send.disabled = true;
-    if (location.protocol === 'file:'){ setTimeout(function(){ send.classList.remove('loading'); send.disabled = false; err.textContent = 'Strona jest otwarta z pliku na dysku. Formularz wysyła wiadomości dopiero ze strony w internecie (np. GitHub Pages).'; }, 400); return; }
+    if (location.protocol === 'file:'){ setTimeout(function(){ send.classList.remove('loading'); send.disabled = false; err.textContent = 'Strona jest otwarta z pliku na dysku. Formularz wysyła wiadomości dopiero ze strony w internecie.'; }, 400); return; }
     if (/claude\.ai|claudeusercontent/.test(location.hostname)){ setTimeout(function(){ d.getElementById('done-txt').textContent='To podgląd strony. Na prawdziwej stronie wiadomość trafi na Twój e-mail.'; finish(true) }, 900); return; }
+    var onNetlify = /netlify\.app$|mogetopomoge\.pl$/.test(location.hostname);
+    if (onNetlify){
+      fetch('/', {method:'POST', headers:{'Content-Type':'application/x-www-form-urlencoded'}, body: new URLSearchParams(new FormData(form)).toString()})
+        .then(function(r){ if(!r.ok) throw new Error(r.status); finish(true) })
+        .catch(function(){ finish(false) });
+      return;
+    }
     var payload = {
       wiadomosc: msg.value.trim(), kontakt: c,
       _subject: 'Nowe zgłoszenie z mogetopomoge.pl', _template: 'table', _captcha: 'false',

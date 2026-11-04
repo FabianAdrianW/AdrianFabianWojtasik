@@ -11,7 +11,9 @@ Lead page Adriana Fabiana Wojtasika: darmowe strony, aplikacje, programy i autom
 
 ## Wdrożenie
 
-Działa na każdym hostingu (Netlify, GitHub Pages, zwykły serwer). Formularz wysyła zgłoszenia przez FormSubmit na adres z `FORM_EMAIL` w `src/body.html`. Przy pierwszym wysłaniu FormSubmit przysyła mail aktywacyjny – kliknij link, od tej pory zgłoszenia przychodzą normalnie.
+Strona stoi na Netlify (projekt `mogetopomoge`). Formularz działa przez Netlify Forms (`name="kontakt"`); zgłoszenia widać w panelu Netlify: Forms → kontakt. Powiadomienie e-mail ustawia się raz: Forms → Form notifications → Add notification → Email.
+
+Na innych hostingach (np. GitHub Pages) formularz wysyła przez FormSubmit na adres z `FORM_EMAIL` w `src/body.html`.
 
 ## Kolejka darmowych projektów
 
