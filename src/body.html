@@ -1,0 +1,599 @@
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 22s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><circle cx="12" cy="10" r="2.6" fill="none" stroke="currentColor" stroke-width="2"/></symbol>
+    <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 10.5 12 3l9 7.5M5 9v11h14V9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M10 20v-6h4v6" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></symbol>
+    <symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6.3 6.3l2.5 2.5M15.2 15.2l2.5 2.5M6.3 17.7l2.5-2.5M15.2 8.8l2.5-2.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="i-star" viewBox="0 0 24 24"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></symbol>
+    <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="M3 12h18M12 3c2.5 2.7 3.8 5.7 3.8 9s-1.3 6.3-3.8 9c-2.5-2.7-3.8-5.7-3.8-9S9.5 5.7 12 3Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></symbol>
+    <symbol id="i-app" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="3" fill="none" stroke="currentColor" stroke-width="2"/><path d="M3 9h18M7 6.5h.01M10 6.5h.01" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M8 14h4M8 17h7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="i-desk" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 20h8M12 16v4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="i-flow" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><rect x="14" y="14" width="7" height="7" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M10 6.5h4.5a3 3 0 0 1 3 3V14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="m15 11.5 2.5 2.5 2.5-2.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-chat" viewBox="0 0 24 24"><path d="M20 11.5a8 8 0 0 1-11.6 7.1L4 20l1.4-4.2A8 8 0 1 1 20 11.5Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24"><path d="M5 4h3.5l1.8 4.5-2.3 1.4a11 11 0 0 0 6.1 6.1l1.4-2.3L20 15.5V19a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="m4 7 8 6 8-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 11v5M12 8h.01" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+  </defs>
+</svg>
+
+<div class="progress" aria-hidden="true"></div>
+
+<header class="nav" id="nav">
+  <div class="nav-in">
+    <a href="#top" class="brand" aria-label="Adrian Wojtasik, strona główna">
+      <svg class="mark" viewBox="0 0 48 24" aria-hidden="true"><path d="M2 22 8 2l6 20M4.3 15h7.4"/><path d="M19 22V2h9M19 12h7.5"/><path d="M32 2l3 20 3.3-14 3.3 14 3-20"/><circle cx="46.5" cy="21" r="1.9"/></svg>
+      <span class="brand-name">Adrian Wojtasik</span>
+    </a>
+    <ul class="links" id="links">
+      <li><a href="#realizacje">Realizacje</a></li>
+      <li><a href="#dlaczego">Za darmo?</a></li>
+      <li><a href="#jak">Jak to działa</a></li>
+      <li><a href="#o-mnie">O mnie</a></li>
+      <li><a href="#faq">Pytania</a></li>
+      <li class="hl" role="presentation" aria-hidden="true"></li>
+    </ul>
+    <a href="#kontakt" class="btn btn-primary btn-sm mag">Napisz do mnie</a>
+    <button class="burger" id="burger" aria-label="Otwórz menu" aria-expanded="false" aria-controls="mmenu"><span></span></button>
+  </div>
+</header>
+
+<nav class="mmenu" id="mmenu" aria-label="Menu">
+  <a href="#realizacje" style="--i:0">Realizacje</a>
+  <a href="#dlaczego" style="--i:1">Dlaczego za darmo?</a>
+  <a href="#jak" style="--i:2">Jak to działa</a>
+  <a href="#o-mnie" style="--i:3">O mnie</a>
+  <a href="#faq" style="--i:4">Pytania</a>
+  <a href="#kontakt" style="--i:5;color:var(--blue-text)">Napisz do mnie →</a>
+</nav>
+
+<main id="top">
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="glow" aria-hidden="true"></div>
+  <div class="wrap hero-grid">
+    <div>
+      <a href="#kontakt" class="status fade-up" style="animation-delay:.05s">
+        <span class="past"><span data-slot-now>Listopad</span> · zajęte</span>
+        <span class="sep" aria-hidden="true">/</span>
+        <span class="now"><span class="dot" aria-hidden="true"></span><span>Zapisy na <b data-slot-next>grudzień</b> otwarte</span></span>
+      </a>
+      <h1 id="h1">Zrobię Twojej firmie stronę albo aplikację. <span class="free">Za darmo.<svg viewBox="0 0 300 20" preserveAspectRatio="none" aria-hidden="true"><path d="M4 14C70 6 160 4 296 10"/></svg></span></h1>
+      <p class="lead fade-up" style="animation-delay:.7s">Jestem Adrian z Nadolic Wielkich. <strong>Raz w miesiącu wybieram jeden projekt</strong> od firmy albo osoby z okolicy i robię go bez opłat. Strona internetowa, aplikacja, program na komputer albo automatyzacja, która oszczędzi Ci czas.</p>
+      <div class="cta-row fade-up" style="animation-delay:.85s">
+        <a href="#kontakt" class="btn btn-primary mag">Opisz swój pomysł
+          <span class="arr" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#i-arrow"/></svg><svg viewBox="0 0 24 24"><use href="#i-arrow"/></svg></span>
+        </a>
+        <a href="#realizacje" class="btn btn-ghost mag">Zobacz, co już zrobiłem</a>
+      </div>
+      <div class="reassure fade-up" style="animation-delay:1s">
+        <span><svg><use href="#i-check"/></svg>Bez umów i zobowiązań</span>
+        <span><svg><use href="#i-check"/></svg>Wystarczy kilka zdań</span>
+        <span><svg><use href="#i-check"/></svg>Projekt zostaje Twój</span>
+      </div>
+    </div>
+
+    <div class="portrait fade-up" style="animation-delay:.35s" id="portrait">
+      <div class="portrait-card">
+        <img src="img/adrian.webp" alt="Adrian Wojtasik w kurtce, na tle zieleni" width="882" height="882" fetchpriority="high">
+        <div class="portrait-cap">
+          <div><b>Adrian Wojtasik</b><span>Strony, aplikacje, automatyzacje</span></div>
+        </div>
+      </div>
+      <div class="chip chip-a"><i><svg><use href="#i-pin"/></svg></i><div>Nadolice Wielkie<small>gmina Czernica</small></div></div>
+      <div class="chip chip-b"><i><svg><use href="#i-globe"/></svg></i><div>qmala.pl<small>ostatnia realizacja</small></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee" aria-hidden="true">
+  <div class="mq-track">
+    <span>Strony firmowe</span><span class="pl">Czernica</span><span>Aplikacje w przeglądarce</span><span class="pl">Jelcz-Laskowice</span><span>Programy na komputer</span><span class="pl">Siechnice</span><span>Automatyzacje</span><span class="pl">Wrocław, Psie Pole</span><span>Sklepy i rezerwacje</span><span class="pl">Nadolice Wielkie</span>
+    <span>Strony firmowe</span><span class="pl">Czernica</span><span>Aplikacje w przeglądarce</span><span class="pl">Jelcz-Laskowice</span><span>Programy na komputer</span><span class="pl">Siechnice</span><span>Automatyzacje</span><span class="pl">Wrocław, Psie Pole</span><span>Sklepy i rezerwacje</span><span class="pl">Nadolice Wielkie</span>
+  </div>
+</div>
+
+<!-- REALIZACJE -->
+<section class="sec" id="realizacje">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow rv">Realizacje</span>
+      <h2 class="rv" style="--d:1">Kilka rzeczy, które już działają.</h2>
+      <p class="lead rv" style="--d:2">Firma rodzinna, artysta, sklep z kosmetykami i moja własna aplikacja. Każdy projekt zaczynał się od rozmowy o tym, czego ktoś naprawdę potrzebuje.</p>
+    </div>
+
+    <div class="work-grid">
+      <article class="work wide rv">
+        <a class="work-card tilt" href="https://qmala.pl" target="_blank" rel="noopener">
+          <div class="shot">
+            <div class="shot-bar"><i></i><i></i><i></i><span>qmala.pl</span></div>
+            <div class="shot-view"><img src="img/qmala.webp" alt="Strona qmala.pl: instalacje elektryczne we Wrocławiu od 1978 roku" loading="lazy" width="1440" height="900"></div>
+          </div>
+          <div class="work-body">
+            <div class="work-top"><span class="tag">Strona firmowa · Wrocław</span><span class="go" aria-hidden="true"><svg><use href="#i-arrow"/></svg></span></div>
+            <h3>Qmala, elektroinstalacje</h3>
+            <p>Rodzinny zakład elektryków działający od 1978 roku. Strona, z której klient od razu dzwoni albo prosi o wycenę, a referencje widać na pierwszym ekranie.</p>
+          </div>
+        </a>
+      </article>
+
+      <article class="work narrow rv" style="--d:1">
+        <a class="work-card tilt" href="https://www.eyelingo.app" target="_blank" rel="noopener">
+          <div class="shot">
+            <div class="shot-bar"><i></i><i></i><i></i><span>eyelingo.app</span></div>
+            <div class="shot-view">
+              <img src="img/eyelingo.webp" alt="Eyelingo: nauka języków w tle pracy" loading="lazy" width="1200" height="630">
+              <img class="phone" src="img/eyelingo-phone.webp" alt="Ekran fiszki w aplikacji Eyelingo na telefonie" loading="lazy" width="420" height="710">
+            </div>
+          </div>
+          <div class="work-body">
+            <div class="work-top"><span class="tag">Aplikacja · telefon · komputer</span><span class="go" aria-hidden="true"><svg><use href="#i-arrow"/></svg></span></div>
+            <h3>Eyelingo</h3>
+            <p>Moja platforma do nauki języków. 14 języków, nauczyciel AI i fiszki, które pojawiają się w tle, kiedy pracujesz.</p>
+          </div>
+        </a>
+      </article>
+
+      <article class="work narrow rv">
+        <div class="work-card tilt">
+          <div class="shot">
+            <div class="shot-bar"><i></i><i></i><i></i><span>Kamil Tereszko · malarstwo</span></div>
+            <div class="shot-view"><img src="img/tereszko.webp" alt="Strona malarza Kamila Tereszki z galerią obrazów" loading="lazy" width="1440" height="900"></div>
+          </div>
+          <div class="work-body">
+            <div class="work-top"><span class="tag">Strona artysty · galeria</span></div>
+            <h3>Kamil Tereszko</h3>
+            <p>Malarz potrzebował miejsca, w którym obrazy mówią same za siebie. Mało tekstu, duże zdjęcia prac i prosty kontakt.</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="work wide rv" style="--d:1">
+        <a class="work-card tilt" href="https://fabianadrianw.github.io/nacomi_strony/" target="_blank" rel="noopener">
+          <div class="shot">
+            <div class="shot-bar"><i></i><i></i><i></i><span>nacomi.pl · koncepcja</span></div>
+            <div class="shot-view"><img src="img/nacomi.webp" alt="Propozycja nowej strony kategorii sklepu Nacomi" loading="lazy" width="1440" height="560"></div>
+          </div>
+          <div class="work-body">
+            <div class="work-top"><span class="tag">Projekt UX · sklep internetowy</span><span class="go" aria-hidden="true"><svg><use href="#i-arrow"/></svg></span></div>
+            <h3>Nacomi, kosmetyki naturalne</h3>
+            <p>Propozycja przebudowy sklepu: kremy filtrowane po problemie skóry zamiast długiej listy. Z przełącznikiem „przed i po”, żeby było widać różnicę.</p>
+          </div>
+        </a>
+      </article>
+
+      <div class="work-cta rv">
+        <div>
+          <h3>Następna może być Twoja firma.</h3>
+          <p>Fryzjer, warsztat, gabinet, sklep, koło gospodyń. Wielkość nie ma znaczenia.</p>
+        </div>
+        <a href="#kontakt" class="btn btn-primary mag">Zgłoś projekt
+          <span class="arr" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#i-arrow"/></svg><svg viewBox="0 0 24 24"><use href="#i-arrow"/></svg></span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DLACZEGO -->
+<section class="sec" id="dlaczego" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow rv">Dlaczego za darmo?</span>
+      <h2 class="rv" style="--d:1">Pytasz o haczyk. Słusznie.</h2>
+      <p class="lead rv" style="--d:2">Darmowe rzeczy zwykle budzą podejrzenia, więc mówię wprost, z czego to wynika i czego oczekuję w zamian.</p>
+    </div>
+    <div class="why-grid">
+      <div class="why spot rv">
+        <div class="ico"><svg><use href="#i-home"/></svg></div>
+        <h3>Buduję portfolio tam, gdzie mieszkam</h3>
+        <p>Wolę pokazywać prawdziwe projekty dla firm z okolicy niż wymyślone przykłady. Twoja strona to dla mnie najlepsza wizytówka.</p>
+      </div>
+      <div class="why spot rv" style="--d:1">
+        <div class="ico"><svg><use href="#i-spark"/></svg></div>
+        <h3>Pracuję z AI, więc idzie szybciej</h3>
+        <p>Żmudną część pracy wykonuje za mnie sztuczna inteligencja. To, co kiedyś zajmowało tygodnie, zamykam szybciej, a zaoszczędzony czas mogę komuś oddać.</p>
+      </div>
+      <div class="why spot rv" style="--d:2">
+        <div class="ico"><svg><use href="#i-star"/></svg></div>
+        <h3>Proszę o dwie rzeczy</h3>
+        <p>Opinię w Google, jeśli będziesz zadowolony, i zgodę na pokazanie projektu w realizacjach. Nic więcej.</p>
+      </div>
+    </div>
+    <p class="note rv"><svg><use href="#i-info"/></svg><span>Jeśli projekt wymaga płatnej usługi z zewnątrz, na przykład domeny, mówię o tym przed startem. Płacisz wtedy bezpośrednio dostawcy, nie mnie.</span></p>
+  </div>
+</section>
+
+<!-- USŁUGI -->
+<section class="sec" id="uslugi" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow rv">Co mogę zrobić</span>
+      <h2 class="rv" style="--d:1">Coś cyfrowego, co ułatwi Ci pracę.</h2>
+    </div>
+    <div class="svc-grid">
+      <div class="svc big spot rv">
+        <div class="ico"><svg><use href="#i-globe"/></svg></div>
+        <h3>Strona internetowa</h3>
+        <p>Wizytówka firmy, strona jednej usługi albo menu lokalu. Dobrze wygląda na telefonie i da się ją znaleźć w Google, kiedy ktoś szuka usług w okolicy.</p>
+        <div class="ex"><span>wizytówka firmy</span><span>galeria realizacji</span><span>cennik</span><span>menu</span><span>mapa dojazdu</span></div>
+      </div>
+      <div class="svc spot rv" style="--d:1">
+        <div class="ico"><svg><use href="#i-app"/></svg></div>
+        <h3>Aplikacja w przeglądarce</h3>
+        <p>Działa bez instalowania. Klient otwiera link i gotowe.</p>
+        <div class="ex"><span>rezerwacje</span><span>kalkulator wyceny</span></div>
+      </div>
+      <div class="svc spot rv">
+        <div class="ico"><svg><use href="#i-desk"/></svg></div>
+        <h3>Program na komputer</h3>
+        <p>Narzędzie do jednej konkretnej pracy w biurze albo warsztacie.</p>
+        <div class="ex"><span>oferty</span><span>ewidencja</span></div>
+      </div>
+      <div class="svc spot rv" style="--d:1">
+        <div class="ico"><svg><use href="#i-flow"/></svg></div>
+        <h3>Automatyzacja</h3>
+        <p>Powtarzalne rzeczy robią się same. Zgłoszenie z formularza trafia do arkusza, a klient od razu dostaje odpowiedź.</p>
+      </div>
+      <div class="svc accent spot rv" style="--d:2">
+        <h3>Nie wiesz, czego potrzebujesz?</h3>
+        <p style="color:var(--fg);opacity:.75">Opisz, co Ci przeszkadza w pracy. Rozwiązanie wymyślimy razem.</p>
+        <a href="#kontakt" class="btn btn-primary btn-sm mag">Opisz problem</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- JAK -->
+<section class="sec" id="jak" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow rv">Jak to działa</span>
+      <h2 class="rv" style="--d:1">Trzy kroki. Pierwszy zajmie Ci minutę.</h2>
+    </div>
+    <div class="steps" id="steps">
+      <div class="steps-line" aria-hidden="true"></div>
+      <div class="step rv">
+        <div class="step-n">01</div>
+        <span class="meta">Ty · 1 minuta</span>
+        <h3>Piszesz kilka zdań</h3>
+        <p>Przez formularz poniżej, WhatsApp albo telefon. Nie musisz znać się na technologii, wystarczy opisać, czego potrzebujesz.</p>
+      </div>
+      <div class="step rv" style="--d:1">
+        <div class="step-n">02</div>
+        <span class="meta">Razem · ok. 15 minut</span>
+        <h3>Krótko rozmawiamy</h3>
+        <p>Przez telefon albo przy kawie w okolicy. Ustalamy, co ma powstać i na kiedy.</p>
+      </div>
+      <div class="step rv" style="--d:2">
+        <div class="step-n">03</div>
+        <span class="meta">Ja · do skutku</span>
+        <h3>Dostajesz gotowy projekt</h3>
+        <p>Po drodze pokazuję postępy. Na koniec wszystko jest Twoje: pliki, dostępy i domena.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- O MNIE -->
+<section class="sec" id="o-mnie" style="padding-top:0">
+  <div class="wrap about">
+    <div class="about-photo rv"><img src="img/adrian.webp" alt="Adrian Wojtasik" loading="lazy" width="882" height="882"></div>
+    <div class="about-txt">
+      <span class="eyebrow rv">O mnie</span>
+      <h2 class="rv" style="--d:1">Cześć, jestem Adrian.</h2>
+      <p class="rv" style="--d:2">Mieszkam w Nadolicach Wielkich. Z wykształcenia jestem filologiem angielskim, teraz robię magisterkę z psychologii i informatyki w WSB Merito. Od kilku lat buduję <strong>Eyelingo</strong>, własną aplikację do nauki języków, a po godzinach strony dla firm z okolicy.</p>
+      <p class="rv" style="--d:3">Pracuję z AI i tego nie ukrywam. Dzięki temu jedna osoba może zrobić to, do czego kiedyś potrzeba było małego zespołu. Psychologia przydaje się bardziej, niż się wydaje: dobra strona to taka, przy której klient nie musi się zastanawiać, gdzie kliknąć.</p>
+      <dl class="facts rv" style="--d:4">
+        <div><dt>Skąd</dt><dd>Nadolice Wielkie, gm. Czernica</dd></div>
+        <div><dt>Dojeżdżam</dt><dd>Wschodni Wrocław i okolice</dd></div>
+        <div><dt>Języki</dt><dd>polski, angielski, hiszpański, niderlandzki</dd></div>
+        <div><dt>Kontakt</dt><dd>791 632 675</dd></div>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="sec" id="faq" style="padding-top:0">
+  <div class="wrap faq">
+    <div class="sec-head">
+      <span class="eyebrow rv">Pytania</span>
+      <h2 class="rv" style="--d:1">Zanim napiszesz.</h2>
+      <p class="lead rv" style="--d:2">Nie ma tu odpowiedzi na Twoje pytanie? Zadzwoń, wyjaśnię w dwie minuty.</p>
+    </div>
+    <div class="qas">
+      <div class="qa open rv">
+        <button aria-expanded="true">Naprawdę nic nie płacę?<span class="pm" aria-hidden="true"></span></button>
+        <div class="ans"><div><p>Za moją pracę nie płacisz nic. Proszę tylko o opinię w Google i zgodę na pokazanie projektu. Jeśli potrzebna jest płatna usługa z zewnątrz, na przykład domena, dowiesz się o tym przed startem.</p></div></div>
+      </div>
+      <div class="qa rv">
+        <button aria-expanded="false">Dlaczego tylko jeden projekt w miesiącu?<span class="pm" aria-hidden="true"></span></button>
+        <div class="ans"><div><p>Bo chcę zrobić każdy porządnie. Chętnych jest więcej niż miejsc, dlatego prowadzę kolejkę na kolejne miesiące.</p></div></div>
+      </div>
+      <div class="qa rv">
+        <button aria-expanded="false">Jak wybierasz projekt?<span class="pm" aria-hidden="true"></span></button>
+        <div class="ans"><div><p>Biorę ten, który najbardziej pomoże czyjejś pracy. Każdy dostaje ode mnie odpowiedź. Jeśli nie w tym miesiącu, to z propozycją terminu w następnych.</p></div></div>
+      </div>
+      <div class="qa rv">
+        <button aria-expanded="false">Czyja będzie strona albo aplikacja?<span class="pm" aria-hidden="true"></span></button>
+        <div class="ans"><div><p>Twoja. Domena, pliki i dostępy są zapisane na Ciebie. Nie jesteś ode mnie zależny.</p></div></div>
+      </div>
+      <div class="qa rv">
+        <button aria-expanded="false">Muszę się znać na komputerach?<span class="pm" aria-hidden="true"></span></button>
+        <div class="ans"><div><p>Nie. Opisz własnymi słowami, co chcesz mieć albo co Ci przeszkadza. Przełożenie tego na technologię to moja część.</p></div></div>
+      </div>
+      <div class="qa rv">
+        <button aria-expanded="false">Co po oddaniu projektu?<span class="pm" aria-hidden="true"></span></button>
+        <div class="ans"><div><p>Pokażę Ci, jak z niego korzystać, i zostaję w kontakcie, gdyby coś wymagało poprawki.</p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- KONTAKT -->
+<section class="contact" id="kontakt">
+  <div class="wrap">
+    <div class="contact-box rv">
+      <div class="contact-grid">
+        <div>
+          <span class="eyebrow">Kontakt</span>
+          <h2 style="margin-top:18px">Masz pomysł? Napisz <span class="free">kilka zdań.</span></h2>
+          <p class="lead">Dwa pola i gotowe. Odezwę się, żeby porozmawiać o szczegółach.</p>
+
+          <form name="kontakt" method="POST" data-netlify="true" netlify-honeypot="bot-field" id="form" novalidate>
+            <input type="hidden" name="form-name" value="kontakt">
+            <p class="hp"><label>Nie wypełniaj: <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
+            <div class="field">
+              <label for="msg">Czego potrzebujesz?</label>
+              <div class="quick" id="quick" aria-label="Szybki wybór">
+                <button type="button" data-t="Potrzebuję strony internetowej dla firmy. ">Strona dla firmy</button>
+                <button type="button" data-t="Mam pomysł na aplikację. ">Aplikacja</button>
+                <button type="button" data-t="Chcę zautomatyzować coś w pracy. ">Automatyzacja</button>
+                <button type="button" data-t="Jeszcze nie wiem, czego potrzebuję. Mój problem to: ">Nie wiem jeszcze</button>
+              </div>
+              <textarea class="input" id="msg" name="wiadomosc" required placeholder="Np. Prowadzę zakład fryzjerski w Czernicy i chcę, żeby klienci mogli zapisywać się przez internet."></textarea>
+            </div>
+            <div class="field">
+              <label for="kontakt-dane">Jak mam się odezwać? <span>telefon albo e-mail</span></label>
+              <input class="input" id="kontakt-dane" name="kontakt" required autocomplete="tel email" placeholder="np. 600 100 200">
+            </div>
+            <p class="err" id="err" role="alert"></p>
+            <div class="send-row">
+              <button type="submit" class="btn btn-primary btn-send mag" id="send">
+                <span class="lbl" style="display:inline-flex;align-items:center;gap:10px">Wyślij <span class="arr" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#i-arrow"/></svg><svg viewBox="0 0 24 24"><use href="#i-arrow"/></svg></span></span>
+                <span class="spin" aria-hidden="true"></span>
+              </button>
+              <small>Nikomu nie przekazuję Twoich danych.</small>
+            </div>
+          </form>
+
+          <div class="done" id="done" role="status" aria-live="polite">
+            <svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="21"/><path d="m15 24.5 6 6 12-13"/></svg>
+            <h3>Dzięki, mam Twoją wiadomość.</h3>
+            <p id="done-txt">Odezwę się na podany kontakt. Jeśli sprawa jest pilna, zadzwoń: 791 632 675.</p>
+          </div>
+        </div>
+
+        <aside class="direct">
+          <p class="mono">Wolisz od razu porozmawiać?</p>
+          <a class="dl" href="https://wa.me/48791632675?text=Cze%C5%9B%C4%87%20Adrian%2C%20mam%20pomys%C5%82%20na%20projekt%3A%20" target="_blank" rel="noopener">
+            <span class="ic"><svg><use href="#i-chat"/></svg></span>
+            <div><b>Napisz na WhatsApp</b><span>791 632 675</span></div>
+            <svg class="chev"><use href="#i-arrow"/></svg>
+          </a>
+          <a class="dl" href="tel:+48791632675">
+            <span class="ic"><svg><use href="#i-phone"/></svg></span>
+            <div><b>Zadzwoń</b><span>791 632 675</span></div>
+            <svg class="chev"><use href="#i-arrow"/></svg>
+          </a>
+          <a class="dl" href="mailto:eyeamadrian@gmail.com?subject=Projekt%20z%20mogetopomoge.pl">
+            <span class="ic"><svg><use href="#i-mail"/></svg></span>
+            <div><b>Wyślij e-mail</b><span>eyeamadrian@gmail.com</span></div>
+            <svg class="chev"><use href="#i-arrow"/></svg>
+          </a>
+          <div class="queue" aria-label="Wolne terminy">
+            <p class="mono" style="margin-bottom:6px">Kolejka darmowych projektów</p>
+            <div id="queue"></div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="sig" aria-label="Mogę to. Pomogę."><span>Mogę</span><span>to.</span><span class="b">Pomogę.</span></div>
+    <div class="foot">
+      <span>© <span id="yr">2026</span> Adrian Fabian Wojtasik · Nadolice Wielkie</span>
+      <nav aria-label="Stopka">
+        <a href="#realizacje">Realizacje</a>
+        <a href="#faq">Pytania</a>
+        <a href="https://github.com/FabianAdrianW" target="_blank" rel="noopener">GitHub</a>
+        <a href="#kontakt">Kontakt</a>
+      </nav>
+    </div>
+  </div>
+</footer>
+
+<div class="mbar" id="mbar">
+  <a href="#kontakt" class="btn btn-primary">Opisz swój pomysł</a>
+  <a href="tel:+48791632675" class="btn btn-ghost" aria-label="Zadzwoń 791 632 675"><svg style="width:20px;height:20px"><use href="#i-phone"/></svg></a>
+</div>
+
+<script>
+(function(){
+  /* Ustawienia kolejki: zmień FREE_TAKEN_UNTIL, gdy zajmiesz kolejny miesiąc (0 = bieżący miesiąc zajęty, 1 = także następny). */
+  var FREE_TAKEN_UNTIL = 0;
+
+  var d = document, root = d.documentElement;
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var fine = matchMedia('(hover:hover) and (pointer:fine)').matches;
+  root.classList.add('js');
+
+  /* miesiące */
+  var M = ['styczeń','luty','marzec','kwiecień','maj','czerwiec','lipiec','sierpień','wrzesień','październik','listopad','grudzień'];
+  var now = new Date(), m = now.getMonth();
+  var cap = function(s){return s.charAt(0).toUpperCase()+s.slice(1)};
+  var openIdx = (m + FREE_TAKEN_UNTIL + 1) % 12;
+  d.querySelectorAll('[data-slot-now]').forEach(function(e){e.textContent = cap(M[(m+FREE_TAKEN_UNTIL)%12])});
+  d.querySelectorAll('[data-slot-next]').forEach(function(e){e.textContent = M[openIdx]});
+  var q = d.getElementById('queue'), html = '';
+  for (var i=0;i<3;i++){
+    var idx=(m+i)%12, taken = i<=FREE_TAKEN_UNTIL;
+    html += '<div class="row"><span>'+cap(M[idx])+(idx<m?' '+(now.getFullYear()+1):'')+'</span><span class="pill '+(taken?'taken':'open')+'">'+(taken?'zajęte':'wolne')+'</span></div>';
+  }
+  q.innerHTML = html;
+  d.getElementById('yr').textContent = now.getFullYear();
+
+  /* nagłówek: słowa wjeżdżają */
+  var h1 = d.getElementById('h1');
+  if (!reduce){
+    var n = 0;
+    Array.prototype.slice.call(h1.childNodes).forEach(function(node){
+      if (node.nodeType===3){
+        var frag = d.createDocumentFragment();
+        node.textContent.split(/(\s+)/).forEach(function(w){
+          if (!w) return;
+          if (/^\s+$/.test(w)){frag.appendChild(d.createTextNode(w));return}
+          var o=d.createElement('span');o.className='w';var inner=d.createElement('span');inner.textContent=w;inner.style.setProperty('--i',n++);o.appendChild(inner);frag.appendChild(o);
+        });
+        node.parentNode.replaceChild(frag,node);
+      } else if (node.classList && node.classList.contains('free')){
+        var o=d.createElement('span');o.className='w';o.style.overflow='visible';var inner=d.createElement('span');inner.style.setProperty('--i',n++);
+        node.parentNode.insertBefore(o,node);inner.appendChild(node);o.appendChild(inner);
+      }
+    });
+  }
+
+  /* nav: przyklejanie, postęp, aktywna sekcja */
+  var nav = d.getElementById('nav'), prog = d.querySelector('.progress'), mbar = d.getElementById('mbar');
+  var hero = d.getElementById('hero'), contact = d.getElementById('kontakt');
+  var ticking = false;
+  function onScroll(){
+    var y = scrollY, h = root.scrollHeight - innerHeight;
+    nav.classList.toggle('is-stuck', y > 40);
+    prog.style.setProperty('--p', h>0 ? (y/h).toFixed(4) : 0);
+    var heroEnd = hero.offsetTop + hero.offsetHeight - 200;
+    var cTop = contact.getBoundingClientRect().top;
+    mbar.classList.toggle('show', y > heroEnd && cTop > innerHeight*.6);
+    stepsProgress();
+    ticking = false;
+  }
+  addEventListener('scroll', function(){ if(!ticking){requestAnimationFrame(onScroll);ticking=true} }, {passive:true});
+
+  var links = d.querySelectorAll('#links a'), hl = d.querySelector('.hl');
+  links.forEach(function(a){
+    a.addEventListener('mouseenter', function(){ hl.style.width=a.offsetWidth+'px'; hl.style.transform='translateX('+a.offsetLeft+'px)'; });
+  });
+  var secs = ['realizacje','dlaczego','jak','o-mnie','faq'].map(function(id){return d.getElementById(id)});
+  var so = new IntersectionObserver(function(es){
+    es.forEach(function(e){ if(e.isIntersecting){ links.forEach(function(a){a.classList.toggle('is-active', a.getAttribute('href')==='#'+e.target.id)}) } });
+  }, {rootMargin:'-45% 0px -50% 0px'});
+  secs.forEach(function(s){so.observe(s)});
+
+  /* menu mobilne */
+  var burger = d.getElementById('burger'), mm = d.getElementById('mmenu');
+  function setMenu(o){ root.classList.toggle('menu-open',o); burger.setAttribute('aria-expanded',o); burger.setAttribute('aria-label',o?'Zamknij menu':'Otwórz menu'); d.body.style.overflow=o?'hidden':''; }
+  burger.addEventListener('click', function(){ setMenu(!root.classList.contains('menu-open')) });
+  mm.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){setMenu(false)})});
+  addEventListener('keydown', function(e){ if(e.key==='Escape') setMenu(false) });
+
+  /* pojawianie się przy przewijaniu */
+  var ro = new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){e.target.classList.add('in');ro.unobserve(e.target)} }) }, {rootMargin:'0px 0px -8% 0px', threshold:.05});
+  d.querySelectorAll('.rv').forEach(function(el){
+    var r = el.getBoundingClientRect();
+    if (r.top < innerHeight) el.classList.add('in'); else ro.observe(el);
+  });
+  setTimeout(function(){ d.querySelectorAll('.rv:not(.in)').forEach(function(el){ if(el.getBoundingClientRect().top < innerHeight) el.classList.add('in') }) }, 1200);
+
+  /* kroki: linia rośnie */
+  var steps = d.getElementById('steps'), line = steps.querySelector('.steps-line'), stepEls = steps.querySelectorAll('.step');
+  function stepsProgress(){
+    var r = steps.getBoundingClientRect();
+    var p = Math.min(1, Math.max(0, (innerHeight*.75 - r.top) / (r.height + innerHeight*.15)));
+    line.style.setProperty('--sp', p.toFixed(3));
+    stepEls.forEach(function(s,i){ s.classList.toggle('on', p > i/ (stepEls.length) + .02) });
+  }
+  onScroll();
+
+  /* FAQ */
+  d.querySelectorAll('.qa button').forEach(function(b){
+    b.addEventListener('click', function(){
+      var qa = b.parentNode, open = !qa.classList.contains('open');
+      qa.classList.toggle('open', open); b.setAttribute('aria-expanded', open);
+    });
+  });
+
+  if (fine && !reduce){
+    /* poświata w hero za kursorem */
+    var glow = d.querySelector('.glow');
+    hero.addEventListener('pointermove', function(e){
+      var r = hero.getBoundingClientRect();
+      glow.style.setProperty('--gx-pos', (e.clientX - r.left)+'px');
+      glow.style.setProperty('--gy-pos', (e.clientY - r.top)+'px');
+    });
+    /* magnetyczne przyciski */
+    d.querySelectorAll('.mag').forEach(function(b){
+      b.addEventListener('pointermove', function(e){
+        var r = b.getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top;
+        b.style.setProperty('--mx', ((x - r.width/2)*.18)+'px');
+        b.style.setProperty('--my', ((y - r.height/2)*.28)+'px');
+        b.style.setProperty('--bx', x+'px'); b.style.setProperty('--by', y+'px');
+      });
+      b.addEventListener('pointerleave', function(){ b.style.setProperty('--mx','0px'); b.style.setProperty('--my','0px'); });
+    });
+    /* reflektor na kartach */
+    d.querySelectorAll('.spot').forEach(function(c){
+      c.addEventListener('pointermove', function(e){
+        var r = c.getBoundingClientRect();
+        c.style.setProperty('--x', (e.clientX-r.left)+'px'); c.style.setProperty('--y', (e.clientY-r.top)+'px');
+      });
+    });
+    /* pochylenie kart realizacji i portretu */
+    function tilt(el, target, max){
+      el.addEventListener('pointermove', function(e){
+        var r = el.getBoundingClientRect(), px = (e.clientX-r.left)/r.width - .5, py = (e.clientY-r.top)/r.height - .5;
+        target.style.setProperty('--ry', (px*max)+'deg'); target.style.setProperty('--rx', (-py*max)+'deg');
+      });
+      el.addEventListener('pointerleave', function(){ target.style.setProperty('--ry','0deg'); target.style.setProperty('--rx','0deg'); });
+    }
+    d.querySelectorAll('.tilt').forEach(function(c){ tilt(c, c, 4) });
+    var p = d.getElementById('portrait'); tilt(p, p.querySelector('.portrait-card'), 8);
+  }
+
+  /* formularz */
+  var form = d.getElementById('form'), msg = d.getElementById('msg'), contactIn = d.getElementById('kontakt-dane');
+  var err = d.getElementById('err'), send = d.getElementById('send'), done = d.getElementById('done');
+  d.querySelectorAll('#quick button').forEach(function(b){
+    b.addEventListener('click', function(){
+      d.querySelectorAll('#quick button').forEach(function(x){x.classList.remove('on')});
+      b.classList.add('on');
+      var t = b.getAttribute('data-t'), cur = msg.value;
+      d.querySelectorAll('#quick button').forEach(function(x){ var s=x.getAttribute('data-t'); if(cur.indexOf(s)===0) cur=cur.slice(s.length) });
+      msg.value = t + cur; msg.focus(); msg.setSelectionRange(msg.value.length, msg.value.length);
+    });
+  });
+  form.addEventListener('submit', function(e){
+    e.preventDefault(); err.textContent='';
+    if (msg.value.trim().length < 5){ err.textContent='Napisz choć jedno zdanie o tym, czego potrzebujesz.'; msg.focus(); return; }
+    var c = contactIn.value.trim();
+    if (!/@/.test(c) && c.replace(/\D/g,'').length < 9){ err.textContent='Podaj numer telefonu (9 cyfr) albo adres e-mail, żebym mógł odpowiedzieć.'; contactIn.focus(); return; }
+    send.classList.add('loading'); send.disabled = true;
+    var body = new URLSearchParams(new FormData(form)).toString();
+    if (/claude|localhost|^$/.test(location.hostname) || location.protocol==='file:'){ setTimeout(function(){ d.getElementById('done-txt').textContent='To podgląd strony. Po wdrożeniu na Netlify wiadomość trafi prosto na Twoją skrzynkę.'; finish(true) }, 900); return; }
+    fetch('/', {method:'POST', headers:{'Content-Type':'application/x-www-form-urlencoded'}, body:body})
+      .then(function(r){ if(!r.ok) throw new Error(r.status); finish(true) })
+      .catch(function(){ finish(false) });
+  });
+  function finish(ok){
+    send.classList.remove('loading'); send.disabled = false;
+    if (ok){ form.style.display='none'; done.classList.add('show'); }
+    else { err.textContent='Nie udało się wysłać. Napisz na WhatsApp albo zadzwoń: 791 632 675.'; }
+  }
+})();
+</script>
