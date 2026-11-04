@@ -515,12 +515,13 @@
   /* nav: przyklejanie, postęp, aktywna sekcja */
   var nav = d.getElementById('nav'), prog = d.querySelector('.progress'), mbar = d.getElementById('mbar');
   var hero = d.getElementById('hero'), contact = d.getElementById('kontakt');
+  function Z(){ return parseFloat(getComputedStyle(d.querySelector('main')).zoom) || 1 }
   var ticking = false;
   function onScroll(){
     var y = scrollY, h = root.scrollHeight - innerHeight;
     nav.classList.toggle('is-stuck', y > 40);
     prog.style.setProperty('--p', h>0 ? (y/h).toFixed(4) : 0);
-    var heroEnd = hero.offsetTop + hero.offsetHeight - 200;
+    var hr = hero.getBoundingClientRect(), heroEnd = y + hr.bottom - 200;
     var cTop = contact.getBoundingClientRect().top;
     mbar.classList.toggle('show', y > heroEnd && cTop > innerHeight*.6);
     stepsProgress();
@@ -651,9 +652,9 @@
     /* magnetyczne przyciski */
     d.querySelectorAll('.mag').forEach(function(b){
       b.addEventListener('pointermove', function(e){
-        var r = b.getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top;
-        b.style.setProperty('--mx', ((x - r.width/2)*.18)+'px');
-        b.style.setProperty('--my', ((y - r.height/2)*.28)+'px');
+        var r = b.getBoundingClientRect(), z = Z(), x = (e.clientX - r.left)/z, y = (e.clientY - r.top)/z;
+        b.style.setProperty('--mx', ((x - r.width/z/2)*.18)+'px');
+        b.style.setProperty('--my', ((y - r.height/z/2)*.28)+'px');
         b.style.setProperty('--bx', x+'px'); b.style.setProperty('--by', y+'px');
       });
       b.addEventListener('pointerleave', function(){ b.style.setProperty('--mx','0px'); b.style.setProperty('--my','0px'); });
@@ -661,8 +662,8 @@
     /* reflektor na kartach */
     d.querySelectorAll('.spot').forEach(function(c){
       c.addEventListener('pointermove', function(e){
-        var r = c.getBoundingClientRect();
-        c.style.setProperty('--x', (e.clientX-r.left)+'px'); c.style.setProperty('--y', (e.clientY-r.top)+'px');
+        var r = c.getBoundingClientRect(), z = Z();
+        c.style.setProperty('--x', ((e.clientX-r.left)/z)+'px'); c.style.setProperty('--y', ((e.clientY-r.top)/z)+'px');
       });
     });
     /* pochylenie kart realizacji i portretu */

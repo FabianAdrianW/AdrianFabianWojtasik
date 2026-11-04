@@ -335,6 +335,8 @@ footer{border-top:1px solid var(--line);padding-block:56px calc(40px + env(safe-
 
 /* ---------- mobile bar ---------- */
 .mbar{display:none}
+/* na dużych ekranach całość w skali 80% (jak zoom 80% w przeglądarce) */
+@media (min-width:1024px){main,footer,.nav{zoom:.8}}
 
 /* ---------- reveal ---------- */
 .js .rv{opacity:0;transform:translateY(26px);transition:opacity .9s var(--ease),transform .9s var(--ease);transition-delay:calc(var(--d,0)*90ms)}
