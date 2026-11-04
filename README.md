@@ -11,11 +11,12 @@ Lead page Adriana Fabiana Wojtasika: darmowe strony, aplikacje, programy i autom
 
 ## Wdrożenie
 
-Netlify: podłącz repo, katalog publikacji `.`. Formularz kontaktowy działa przez Netlify Forms (`name="kontakt"`), zgłoszenia przychodzą na e-mail ustawiony w panelu Netlify (Forms → Notifications).
+Działa na każdym hostingu (Netlify, GitHub Pages, zwykły serwer). Formularz wysyła zgłoszenia przez FormSubmit na adres z `FORM_EMAIL` w `src/body.html`. Przy pierwszym wysłaniu FormSubmit przysyła mail aktywacyjny – kliknij link, od tej pory zgłoszenia przychodzą normalnie.
 
 ## Kolejka darmowych projektów
 
 W `src/body.html` zmień `FREE_TAKEN_UNTIL`:
+- `-1` – bieżący miesiąc wolny
 - `0` – bieżący miesiąc zajęty, następny wolny
 - `1` – bieżący i następny zajęte
 

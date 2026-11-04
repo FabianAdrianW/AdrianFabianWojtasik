@@ -102,6 +102,7 @@ section{position:relative}
 .glow{position:absolute;width:640px;height:640px;left:var(--gx-pos,60%);top:var(--gy-pos,30%);transform:translate(-50%,-50%);background:radial-gradient(circle,rgba(47,107,255,.22),transparent 62%);pointer-events:none;transition:left .9s var(--ease),top .9s var(--ease);filter:blur(10px)}
 .hero-grid{position:relative;display:grid;grid-template-columns:1.25fr .9fr;gap:clamp(32px,6vw,72px);align-items:center}
 .status{display:inline-flex;align-items:center;flex-wrap:wrap;gap:8px 14px;margin-bottom:30px;padding-bottom:10px;font-family:var(--f-mono);font-size:12.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);background:linear-gradient(var(--line-2),var(--line-2)) left bottom/100% 1px no-repeat}
+.status .past[hidden],.status .sep[hidden]{display:none}
 .status .past{color:var(--dim);text-decoration:line-through;text-decoration-color:var(--dim)}
 .status .sep{color:var(--dim)}
 .status .now{display:inline-flex;align-items:center;gap:9px;color:var(--ok)}
@@ -131,8 +132,8 @@ section{position:relative}
 
 .portrait{position:relative;perspective:1000px;justify-self:end;width:100%;max-width:420px}
 .portrait-card{position:relative;border-radius:var(--r-l);overflow:hidden;border:1px solid var(--line-2);background:var(--surface);aspect-ratio:4/5;transform:rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));transition:transform .6s var(--ease);box-shadow:0 40px 90px -40px rgba(0,0,0,.9)}
-.portrait-card img{width:100%;height:100%;object-fit:cover;object-position:42% 20%;filter:grayscale(.35) contrast(1.05);transform:scale(1.04);transition:filter .8s var(--ease),transform 1.2s var(--ease)}
-.portrait:hover .portrait-card img{filter:none;transform:scale(1.08)}
+.portrait-card img{width:100%;height:100%;object-fit:cover;object-position:42% 20%;transform:scale(1.04);transition:transform 1.2s var(--ease)}
+.portrait:hover .portrait-card img{transform:scale(1.08)}
 .portrait-card::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(10,12,17,.85));pointer-events:none}
 .portrait-cap{position:absolute;left:20px;right:20px;bottom:18px;z-index:2;display:flex;justify-content:space-between;align-items:end;gap:12px}
 .portrait-cap b{display:block;font-family:var(--f-display);font-size:20px;font-weight:600;letter-spacing:-.01em}
@@ -184,8 +185,16 @@ section{position:relative}
 .shot-view{position:relative;aspect-ratio:16/10;overflow:hidden}
 .shot-view>img:not(.phone){width:100%;height:auto;min-height:100%;object-fit:cover;object-position:left top;transition:transform 1.4s var(--ease)}
 .work-card:hover .shot-view>img:not(.phone){transform:translateY(-4%) scale(1.03)}
-.phone{position:absolute;right:7%;bottom:-18%;width:27%;border-radius:18px;border:3px solid #232a3a;overflow:hidden;box-shadow:0 30px 50px -15px rgba(0,0,0,.8);transform:rotate(4deg);transition:transform .9s var(--ease)}
-.work-card:hover .phone{transform:rotate(0deg) translateY(-12%)}
+.ey{position:absolute;inset:0;background:radial-gradient(120% 90% at 85% 10%,#2a3866 0%,#1a2340 55%,#141b33 100%);display:grid;grid-template-columns:1.1fr .9fr;align-items:center;padding:0 0 0 8%;overflow:hidden}
+.ey::before{content:"";position:absolute;width:60%;aspect-ratio:1;right:-12%;top:18%;border-radius:50%;border:2px solid rgba(201,106,42,.55);pointer-events:none}
+.ey-txt{position:relative;display:grid;gap:12px;align-content:center}
+.ey-logo{width:82%;max-width:300px;height:auto}
+.ey-txt p{font-size:clamp(12px,1.25vw,15px);line-height:1.45;color:rgba(233,237,245,.72);max-width:24ch}
+.ey-txt p::before{content:"";display:block;width:28px;height:2px;background:#c96a2a;margin-bottom:10px}
+.phone{position:relative;justify-self:center;align-self:start;margin-top:7%;width:min(80%,270px);aspect-ratio:828/1280;border-radius:22px;padding:5px;background:#0d111c;box-shadow:0 0 0 1px rgba(255,255,255,.08),0 40px 60px -20px rgba(0,0,0,.85);transform:rotate(5deg) translateY(4%);transition:transform .9s var(--ease)}
+.phone img{width:100%;height:100%;object-fit:cover;object-position:top;border-radius:18px}
+.phone::after{content:"";position:absolute;top:9px;left:50%;width:30%;height:5px;border-radius:9px;background:#0d111c;transform:translateX(-50%)}
+.work-card:hover .phone{transform:rotate(0deg) translateY(-3%)}
 .work-body{display:grid;gap:10px;padding:22px 24px 24px;flex:1;align-content:start}
 .work-top{display:flex;justify-content:space-between;align-items:center;gap:12px}
 .tag{font-family:var(--f-mono);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--blue-text)}
@@ -224,10 +233,8 @@ section{position:relative}
 /* ---------- about ---------- */
 .about{display:grid;grid-template-columns:.85fr 1.15fr;gap:clamp(32px,6vw,80px);align-items:center}
 .about-photo{position:relative;border-radius:var(--r-l);overflow:hidden;aspect-ratio:1;border:1px solid var(--line-2)}
-.about-photo img{width:100%;height:100%;object-fit:cover;filter:grayscale(1) contrast(1.1) brightness(.9);transition:filter .9s var(--ease),transform 1.2s var(--ease)}
-.about-photo::after{content:"";position:absolute;inset:0;background:var(--blue);mix-blend-mode:color;opacity:.55;transition:opacity .9s var(--ease)}
-.about-photo:hover img{filter:none;transform:scale(1.04)}
-.about-photo:hover::after{opacity:0}
+.about-photo img{width:100%;height:100%;object-fit:cover;filter:blur(var(--blur,0px));transform:scale(calc(1.02 + var(--bz,0)));will-change:filter,transform}
+.about-photo::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% 45%,transparent 45%,rgba(10,12,17,var(--vig,0)) 100%);pointer-events:none}
 .about-txt{display:grid;gap:18px}
 .about-txt p{color:var(--muted);font-size:17.5px;max-width:58ch}
 .about-txt p strong{color:var(--fg);font-weight:550}
@@ -445,8 +452,8 @@ footer{border-top:1px solid var(--line);padding-block:56px calc(40px + env(safe-
   <div class="wrap hero-grid">
     <div>
       <a href="#kontakt" class="status fade-up" style="animation-delay:.05s">
-        <span class="past"><span data-slot-now>Listopad</span> · zajęte</span>
-        <span class="sep" aria-hidden="true">/</span>
+        <span class="past" data-past><span data-slot-now>Listopad</span> · zajęte</span>
+        <span class="sep" data-past aria-hidden="true">/</span>
         <span class="now"><span class="dot" aria-hidden="true"></span><span>Zapisy na <b data-slot-next>grudzień</b> otwarte</span></span>
       </a>
       <h1 id="h1">Zrobię Twojej firmie stronę albo aplikację. <span class="free">Za darmo.<svg viewBox="0 0 300 20" preserveAspectRatio="none" aria-hidden="true"><path d="M4 14C70 6 160 4 296 10"/></svg></span></h1>
@@ -514,8 +521,13 @@ footer{border-top:1px solid var(--line);padding-block:56px calc(40px + env(safe-
           <div class="shot">
             <div class="shot-bar"><i></i><i></i><i></i><span>eyelingo.app</span></div>
             <div class="shot-view">
-              <img src="img/eyelingo.webp" alt="Eyelingo: nauka języków w tle pracy" loading="lazy" width="1200" height="630">
-              <img class="phone" src="img/eyelingo-phone.webp" alt="Ekran fiszki w aplikacji Eyelingo na telefonie" loading="lazy" width="420" height="710">
+              <div class="ey">
+                <div class="ey-txt">
+                  <img class="ey-logo" src="img/eyelingo-logo.webp" alt="Eyelingo, see the progress" loading="lazy" width="900" height="209">
+                  <p>Nauka języków w tle Twojej pracy. 14 języków, od A1 do C2.</p>
+                </div>
+                <div class="phone"><img src="img/eyelingo-phone.webp" alt="Fiszka w aplikacji Eyelingo: querer, chcieć" loading="lazy" width="828" height="1280"></div>
+              </div>
             </div>
           </div>
           <div class="work-body">
@@ -589,7 +601,7 @@ footer{border-top:1px solid var(--line);padding-block:56px calc(40px + env(safe-
       <div class="why spot rv" style="--d:2">
         <div class="ico"><svg><use href="#i-star"/></svg></div>
         <h3>Proszę o dwie rzeczy</h3>
-        <p>Opinię w Google, jeśli będziesz zadowolony, i zgodę na pokazanie projektu w realizacjach. Nic więcej.</p>
+        <p>Kilka zdań opinii, którą pokażę na tej stronie, i zgodę na pokazanie projektu w realizacjach. Nic więcej.</p>
       </div>
     </div>
     <p class="note rv"><svg><use href="#i-info"/></svg><span>Jeśli projekt wymaga płatnej usługi z zewnątrz, na przykład domeny, mówię o tym przed startem. Płacisz wtedy bezpośrednio dostawcy, nie mnie.</span></p>
@@ -670,7 +682,7 @@ footer{border-top:1px solid var(--line);padding-block:56px calc(40px + env(safe-
 <!-- O MNIE -->
 <section class="sec" id="o-mnie" style="padding-top:0">
   <div class="wrap about">
-    <div class="about-photo rv"><img src="img/adrian.webp" alt="Adrian Wojtasik" loading="lazy" width="882" height="882"></div>
+    <div class="about-photo rv" id="aboutPhoto"><img src="img/adrian.webp" alt="Adrian Wojtasik" loading="lazy" width="882" height="882"></div>
     <div class="about-txt">
       <span class="eyebrow rv">O mnie</span>
       <h2 class="rv" style="--d:1">Cześć, jestem Adrian.</h2>
@@ -697,7 +709,7 @@ footer{border-top:1px solid var(--line);padding-block:56px calc(40px + env(safe-
     <div class="qas">
       <div class="qa open rv">
         <button aria-expanded="true">Naprawdę nic nie płacę?<span class="pm" aria-hidden="true"></span></button>
-        <div class="ans"><div><p>Za moją pracę nie płacisz nic. Proszę tylko o opinię w Google i zgodę na pokazanie projektu. Jeśli potrzebna jest płatna usługa z zewnątrz, na przykład domena, dowiesz się o tym przed startem.</p></div></div>
+        <div class="ans"><div><p>Za moją pracę nie płacisz nic. Proszę tylko o kilka zdań opinii i zgodę na pokazanie projektu. Jeśli potrzebna jest płatna usługa z zewnątrz, na przykład domena, dowiesz się o tym przed startem.</p></div></div>
       </div>
       <div class="qa rv">
         <button aria-expanded="false">Dlaczego tylko jeden projekt w miesiącu?<span class="pm" aria-hidden="true"></span></button>
@@ -733,9 +745,8 @@ footer{border-top:1px solid var(--line);padding-block:56px calc(40px + env(safe-
           <h2 style="margin-top:18px">Masz pomysł? Napisz <span class="free">kilka zdań.</span></h2>
           <p class="lead">Dwa pola i gotowe. Odezwę się, żeby porozmawiać o szczegółach.</p>
 
-          <form name="kontakt" method="POST" data-netlify="true" netlify-honeypot="bot-field" id="form" novalidate>
-            <input type="hidden" name="form-name" value="kontakt">
-            <p class="hp"><label>Nie wypełniaj: <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
+          <form name="kontakt" method="POST" id="form" novalidate>
+            <p class="hp"><label>Nie wypełniaj: <input name="_honey" id="hp" tabindex="-1" autocomplete="off"></label></p>
             <div class="field">
               <label for="msg">Czego potrzebujesz?</label>
               <div class="quick" id="quick" aria-label="Szybki wybór">
@@ -817,8 +828,10 @@ footer{border-top:1px solid var(--line);padding-block:56px calc(40px + env(safe-
 
 <script>
 (function(){
-  /* Ustawienia kolejki: zmień FREE_TAKEN_UNTIL, gdy zajmiesz kolejny miesiąc (0 = bieżący miesiąc zajęty, 1 = także następny). */
-  var FREE_TAKEN_UNTIL = 0;
+  /* Kolejka: -1 = bieżący miesiąc wolny, 0 = bieżący zajęty, 1 = bieżący i następny zajęte. */
+  var FREE_TAKEN_UNTIL = -1;
+  /* Adres, na który przychodzą zgłoszenia z formularza (FormSubmit). */
+  var FORM_EMAIL = 'eyeamadrian@gmail.com';
 
   var d = document, root = d.documentElement;
   var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -830,7 +843,8 @@ footer{border-top:1px solid var(--line);padding-block:56px calc(40px + env(safe-
   var now = new Date(), m = now.getMonth();
   var cap = function(s){return s.charAt(0).toUpperCase()+s.slice(1)};
   var openIdx = (m + FREE_TAKEN_UNTIL + 1) % 12;
-  d.querySelectorAll('[data-slot-now]').forEach(function(e){e.textContent = cap(M[(m+FREE_TAKEN_UNTIL)%12])});
+  if (FREE_TAKEN_UNTIL < 0) d.querySelectorAll('[data-past]').forEach(function(e){e.hidden = true});
+  d.querySelectorAll('[data-slot-now]').forEach(function(e){e.textContent = cap(M[(m+Math.max(0,FREE_TAKEN_UNTIL))%12])});
   d.querySelectorAll('[data-slot-next]').forEach(function(e){e.textContent = M[openIdx]});
   var q = d.getElementById('queue'), html = '';
   for (var i=0;i<3;i++){
@@ -911,6 +925,20 @@ footer{border-top:1px solid var(--line);padding-block:56px calc(40px + env(safe-
   }
   onScroll();
 
+  /* zdjęcie w "O mnie": ostre dopiero w środku ekranu */
+  var ap = d.getElementById('aboutPhoto'), apImg = ap.querySelector('img');
+  function focusPhoto(){
+    if (reduce) return;
+    var r = ap.getBoundingClientRect();
+    var dist = Math.abs((r.top + r.height/2) - innerHeight/2) / (innerHeight/2);
+    var t = Math.min(1, Math.max(0, (dist - .12) / .8));
+    apImg.style.setProperty('--blur', (t*14).toFixed(2)+'px');
+    apImg.style.setProperty('--bz', (t*.08).toFixed(3));
+    ap.style.setProperty('--vig', (t*.7).toFixed(2));
+  }
+  addEventListener('scroll', function(){ requestAnimationFrame(focusPhoto) }, {passive:true});
+  addEventListener('resize', focusPhoto); focusPhoto();
+
   /* FAQ */
   d.querySelectorAll('.qa button').forEach(function(b){
     b.addEventListener('click', function(){
@@ -974,10 +1002,14 @@ footer{border-top:1px solid var(--line);padding-block:56px calc(40px + env(safe-
     var c = contactIn.value.trim();
     if (!/@/.test(c) && c.replace(/\D/g,'').length < 9){ err.textContent='Podaj numer telefonu (9 cyfr) albo adres e-mail, żebym mógł odpowiedzieć.'; contactIn.focus(); return; }
     send.classList.add('loading'); send.disabled = true;
-    var body = new URLSearchParams(new FormData(form)).toString();
-    if (/claude|localhost|^$/.test(location.hostname) || location.protocol==='file:'){ setTimeout(function(){ d.getElementById('done-txt').textContent='To podgląd strony. Po wdrożeniu na Netlify wiadomość trafi prosto na Twoją skrzynkę.'; finish(true) }, 900); return; }
-    fetch('/', {method:'POST', headers:{'Content-Type':'application/x-www-form-urlencoded'}, body:body})
-      .then(function(r){ if(!r.ok) throw new Error(r.status); finish(true) })
+    if (/claude\.ai|claudeusercontent/.test(location.hostname)){ setTimeout(function(){ d.getElementById('done-txt').textContent='To podgląd strony. Na prawdziwej stronie wiadomość trafi na Twój e-mail.'; finish(true) }, 900); return; }
+    var payload = {
+      wiadomosc: msg.value.trim(), kontakt: c,
+      _subject: 'Nowe zgłoszenie z mogetopomoge.pl', _template: 'table', _captcha: 'false',
+      _honey: d.getElementById('hp').value
+    };
+    fetch('https://formsubmit.co/ajax/' + FORM_EMAIL, {method:'POST', headers:{'Content-Type':'application/json', 'Accept':'application/json'}, body: JSON.stringify(payload)})
+      .then(function(r){ return r.json().catch(function(){ return {} }).then(function(j){ if(!r.ok || String(j.success)!=='true') throw new Error(j.message || r.status); finish(true) }) })
       .catch(function(){ finish(false) });
   });
   function finish(ok){

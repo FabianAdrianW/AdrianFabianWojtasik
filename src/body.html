@@ -55,8 +55,8 @@
   <div class="wrap hero-grid">
     <div>
       <a href="#kontakt" class="status fade-up" style="animation-delay:.05s">
-        <span class="past"><span data-slot-now>Listopad</span> · zajęte</span>
-        <span class="sep" aria-hidden="true">/</span>
+        <span class="past" data-past><span data-slot-now>Listopad</span> · zajęte</span>
+        <span class="sep" data-past aria-hidden="true">/</span>
         <span class="now"><span class="dot" aria-hidden="true"></span><span>Zapisy na <b data-slot-next>grudzień</b> otwarte</span></span>
       </a>
       <h1 id="h1">Zrobię Twojej firmie stronę albo aplikację. <span class="free">Za darmo.<svg viewBox="0 0 300 20" preserveAspectRatio="none" aria-hidden="true"><path d="M4 14C70 6 160 4 296 10"/></svg></span></h1>
@@ -124,8 +124,13 @@
           <div class="shot">
             <div class="shot-bar"><i></i><i></i><i></i><span>eyelingo.app</span></div>
             <div class="shot-view">
-              <img src="img/eyelingo.webp" alt="Eyelingo: nauka języków w tle pracy" loading="lazy" width="1200" height="630">
-              <img class="phone" src="img/eyelingo-phone.webp" alt="Ekran fiszki w aplikacji Eyelingo na telefonie" loading="lazy" width="420" height="710">
+              <div class="ey">
+                <div class="ey-txt">
+                  <img class="ey-logo" src="img/eyelingo-logo.webp" alt="Eyelingo, see the progress" loading="lazy" width="900" height="209">
+                  <p>Nauka języków w tle Twojej pracy. 14 języków, od A1 do C2.</p>
+                </div>
+                <div class="phone"><img src="img/eyelingo-phone.webp" alt="Fiszka w aplikacji Eyelingo: querer, chcieć" loading="lazy" width="828" height="1280"></div>
+              </div>
             </div>
           </div>
           <div class="work-body">
@@ -199,7 +204,7 @@
       <div class="why spot rv" style="--d:2">
         <div class="ico"><svg><use href="#i-star"/></svg></div>
         <h3>Proszę o dwie rzeczy</h3>
-        <p>Opinię w Google, jeśli będziesz zadowolony, i zgodę na pokazanie projektu w realizacjach. Nic więcej.</p>
+        <p>Kilka zdań opinii, którą pokażę na tej stronie, i zgodę na pokazanie projektu w realizacjach. Nic więcej.</p>
       </div>
     </div>
     <p class="note rv"><svg><use href="#i-info"/></svg><span>Jeśli projekt wymaga płatnej usługi z zewnątrz, na przykład domeny, mówię o tym przed startem. Płacisz wtedy bezpośrednio dostawcy, nie mnie.</span></p>
@@ -280,7 +285,7 @@
 <!-- O MNIE -->
 <section class="sec" id="o-mnie" style="padding-top:0">
   <div class="wrap about">
-    <div class="about-photo rv"><img src="img/adrian.webp" alt="Adrian Wojtasik" loading="lazy" width="882" height="882"></div>
+    <div class="about-photo rv" id="aboutPhoto"><img src="img/adrian.webp" alt="Adrian Wojtasik" loading="lazy" width="882" height="882"></div>
     <div class="about-txt">
       <span class="eyebrow rv">O mnie</span>
       <h2 class="rv" style="--d:1">Cześć, jestem Adrian.</h2>
@@ -307,7 +312,7 @@
     <div class="qas">
       <div class="qa open rv">
         <button aria-expanded="true">Naprawdę nic nie płacę?<span class="pm" aria-hidden="true"></span></button>
-        <div class="ans"><div><p>Za moją pracę nie płacisz nic. Proszę tylko o opinię w Google i zgodę na pokazanie projektu. Jeśli potrzebna jest płatna usługa z zewnątrz, na przykład domena, dowiesz się o tym przed startem.</p></div></div>
+        <div class="ans"><div><p>Za moją pracę nie płacisz nic. Proszę tylko o kilka zdań opinii i zgodę na pokazanie projektu. Jeśli potrzebna jest płatna usługa z zewnątrz, na przykład domena, dowiesz się o tym przed startem.</p></div></div>
       </div>
       <div class="qa rv">
         <button aria-expanded="false">Dlaczego tylko jeden projekt w miesiącu?<span class="pm" aria-hidden="true"></span></button>
@@ -343,9 +348,8 @@
           <h2 style="margin-top:18px">Masz pomysł? Napisz <span class="free">kilka zdań.</span></h2>
           <p class="lead">Dwa pola i gotowe. Odezwę się, żeby porozmawiać o szczegółach.</p>
 
-          <form name="kontakt" method="POST" data-netlify="true" netlify-honeypot="bot-field" id="form" novalidate>
-            <input type="hidden" name="form-name" value="kontakt">
-            <p class="hp"><label>Nie wypełniaj: <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
+          <form name="kontakt" method="POST" id="form" novalidate>
+            <p class="hp"><label>Nie wypełniaj: <input name="_honey" id="hp" tabindex="-1" autocomplete="off"></label></p>
             <div class="field">
               <label for="msg">Czego potrzebujesz?</label>
               <div class="quick" id="quick" aria-label="Szybki wybór">
@@ -427,8 +431,10 @@
 
 <script>
 (function(){
-  /* Ustawienia kolejki: zmień FREE_TAKEN_UNTIL, gdy zajmiesz kolejny miesiąc (0 = bieżący miesiąc zajęty, 1 = także następny). */
-  var FREE_TAKEN_UNTIL = 0;
+  /* Kolejka: -1 = bieżący miesiąc wolny, 0 = bieżący zajęty, 1 = bieżący i następny zajęte. */
+  var FREE_TAKEN_UNTIL = -1;
+  /* Adres, na który przychodzą zgłoszenia z formularza (FormSubmit). */
+  var FORM_EMAIL = 'eyeamadrian@gmail.com';
 
   var d = document, root = d.documentElement;
   var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -440,7 +446,8 @@
   var now = new Date(), m = now.getMonth();
   var cap = function(s){return s.charAt(0).toUpperCase()+s.slice(1)};
   var openIdx = (m + FREE_TAKEN_UNTIL + 1) % 12;
-  d.querySelectorAll('[data-slot-now]').forEach(function(e){e.textContent = cap(M[(m+FREE_TAKEN_UNTIL)%12])});
+  if (FREE_TAKEN_UNTIL < 0) d.querySelectorAll('[data-past]').forEach(function(e){e.hidden = true});
+  d.querySelectorAll('[data-slot-now]').forEach(function(e){e.textContent = cap(M[(m+Math.max(0,FREE_TAKEN_UNTIL))%12])});
   d.querySelectorAll('[data-slot-next]').forEach(function(e){e.textContent = M[openIdx]});
   var q = d.getElementById('queue'), html = '';
   for (var i=0;i<3;i++){
@@ -521,6 +528,20 @@
   }
   onScroll();
 
+  /* zdjęcie w "O mnie": ostre dopiero w środku ekranu */
+  var ap = d.getElementById('aboutPhoto'), apImg = ap.querySelector('img');
+  function focusPhoto(){
+    if (reduce) return;
+    var r = ap.getBoundingClientRect();
+    var dist = Math.abs((r.top + r.height/2) - innerHeight/2) / (innerHeight/2);
+    var t = Math.min(1, Math.max(0, (dist - .12) / .8));
+    apImg.style.setProperty('--blur', (t*14).toFixed(2)+'px');
+    apImg.style.setProperty('--bz', (t*.08).toFixed(3));
+    ap.style.setProperty('--vig', (t*.7).toFixed(2));
+  }
+  addEventListener('scroll', function(){ requestAnimationFrame(focusPhoto) }, {passive:true});
+  addEventListener('resize', focusPhoto); focusPhoto();
+
   /* FAQ */
   d.querySelectorAll('.qa button').forEach(function(b){
     b.addEventListener('click', function(){
@@ -584,10 +605,14 @@
     var c = contactIn.value.trim();
     if (!/@/.test(c) && c.replace(/\D/g,'').length < 9){ err.textContent='Podaj numer telefonu (9 cyfr) albo adres e-mail, żebym mógł odpowiedzieć.'; contactIn.focus(); return; }
     send.classList.add('loading'); send.disabled = true;
-    var body = new URLSearchParams(new FormData(form)).toString();
-    if (/claude|localhost|^$/.test(location.hostname) || location.protocol==='file:'){ setTimeout(function(){ d.getElementById('done-txt').textContent='To podgląd strony. Po wdrożeniu na Netlify wiadomość trafi prosto na Twoją skrzynkę.'; finish(true) }, 900); return; }
-    fetch('/', {method:'POST', headers:{'Content-Type':'application/x-www-form-urlencoded'}, body:body})
-      .then(function(r){ if(!r.ok) throw new Error(r.status); finish(true) })
+    if (/claude\.ai|claudeusercontent/.test(location.hostname)){ setTimeout(function(){ d.getElementById('done-txt').textContent='To podgląd strony. Na prawdziwej stronie wiadomość trafi na Twój e-mail.'; finish(true) }, 900); return; }
+    var payload = {
+      wiadomosc: msg.value.trim(), kontakt: c,
+      _subject: 'Nowe zgłoszenie z mogetopomoge.pl', _template: 'table', _captcha: 'false',
+      _honey: d.getElementById('hp').value
+    };
+    fetch('https://formsubmit.co/ajax/' + FORM_EMAIL, {method:'POST', headers:{'Content-Type':'application/json', 'Accept':'application/json'}, body: JSON.stringify(payload)})
+      .then(function(r){ return r.json().catch(function(){ return {} }).then(function(j){ if(!r.ok || String(j.success)!=='true') throw new Error(j.message || r.status); finish(true) }) })
       .catch(function(){ finish(false) });
   });
   function finish(ok){
