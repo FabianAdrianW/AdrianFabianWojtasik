@@ -99,7 +99,8 @@ section{position:relative}
 /* ---------- hero ---------- */
 .hero{padding-top:clamp(120px,16vw,170px);padding-bottom:clamp(64px,8vw,96px);overflow:hidden}
 .hero::before{content:"";position:absolute;inset:0;background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:64px 64px;mask-image:radial-gradient(ellipse 80% 70% at 60% 30%,#000 20%,transparent 75%);-webkit-mask-image:radial-gradient(ellipse 80% 70% at 60% 30%,#000 20%,transparent 75%);opacity:.55;pointer-events:none}
-.glow{position:absolute;width:640px;height:640px;left:var(--gx-pos,60%);top:var(--gy-pos,30%);transform:translate(-50%,-50%);background:radial-gradient(circle,rgba(47,107,255,.22),transparent 62%);pointer-events:none;transition:left .9s var(--ease),top .9s var(--ease);filter:blur(10px)}
+.swarm{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;mask-image:linear-gradient(90deg,rgba(0,0,0,.28) 0%,rgba(0,0,0,.45) 35%,#000 60%);-webkit-mask-image:linear-gradient(90deg,rgba(0,0,0,.28) 0%,rgba(0,0,0,.45) 35%,#000 60%)}
+@media (max-width:980px){.swarm{mask-image:linear-gradient(180deg,rgba(0,0,0,.35),#000 70%);-webkit-mask-image:linear-gradient(180deg,rgba(0,0,0,.35),#000 70%)}}
 .hero-grid{position:relative;display:grid;grid-template-columns:1.25fr .9fr;gap:clamp(32px,6vw,72px);align-items:center}
 .status{display:inline-flex;align-items:center;flex-wrap:wrap;gap:8px 14px;margin-bottom:30px;padding-bottom:10px;font-family:var(--f-mono);font-size:12.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);background:linear-gradient(var(--line-2),var(--line-2)) left bottom/100% 1px no-repeat}
 .status .past[hidden],.status .sep[hidden]{display:none}
@@ -452,7 +453,7 @@ footer{border-top:1px solid var(--line);padding-block:56px calc(40px + env(safe-
 
 <!-- HERO -->
 <section class="hero" id="hero">
-  <div class="glow" aria-hidden="true"></div>
+  <canvas class="swarm" id="swarm" aria-hidden="true"></canvas>
   <div class="wrap hero-grid">
     <div>
       <a href="#kontakt" class="status fade-up" style="animation-delay:.05s">
@@ -502,7 +503,7 @@ footer{border-top:1px solid var(--line);padding-block:56px calc(40px + env(safe-
     <div class="sec-head">
       <span class="eyebrow rv">Realizacje</span>
       <h2 class="rv" style="--d:1">Kilka rzeczy, które już działają.</h2>
-      <p class="lead rv" style="--d:2">Firma rodzinna, artysta, sklep z kosmetykami i moja własna aplikacja. Każdy projekt zaczynał się od rozmowy o tym, czego ktoś naprawdę potrzebuje.</p>
+      <p class="lead rv" style="--d:2">Firma rodzinna, malarz, fotograf, sklep z kosmetykami, moja własna aplikacja i jeden eksperyment. Każdy projekt zaczynał się od rozmowy o tym, czego ktoś naprawdę potrzebuje.</p>
     </div>
 
     <div class="work-grid">
@@ -568,6 +569,34 @@ footer{border-top:1px solid var(--line);padding-block:56px calc(40px + env(safe-
             <p>Propozycja przebudowy sklepu: kremy filtrowane po problemie skóry zamiast długiej listy. Z przełącznikiem „przed i po”, żeby było widać różnicę.</p>
           </div>
         </a>
+      </article>
+
+      <article class="work wide rv">
+        <div class="work-card tilt">
+          <div class="shot">
+            <div class="shot-bar"><i></i><i></i><i></i><span>Alan · fotografia</span></div>
+            <div class="shot-view"><img src="img/alan.webp" alt="Strona fotografa Alana: ciemne tło, sylwetka i duży napis Alan" loading="lazy" width="1440" height="900"></div>
+          </div>
+          <div class="work-body">
+            <div class="work-top"><span class="tag">Strona fotografa · portfolio</span></div>
+            <h3>Alan, fotografia portretowa</h3>
+            <p>Portret i studium ciała. Ciemna, cicha strona, na której pierwsze skrzypce gra zdjęcie. Po galerii można chodzić nawet samą klawiaturą.</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="work narrow rv" style="--d:1">
+        <div class="work-card tilt">
+          <div class="shot">
+            <div class="shot-bar"><i></i><i></i><i></i><span>Nanorój · eksperyment</span></div>
+            <div class="shot-view"><img src="img/nanoroj.webp" alt="Nanorój: kula z tysięcy mikrorobotów w białej scenie 3D" loading="lazy" width="1440" height="900"></div>
+          </div>
+          <div class="work-body">
+            <div class="work-top"><span class="tag">Eksperyment 3D · przeglądarka</span></div>
+            <h3>Nanorój</h3>
+            <p>Tysiące mikrorobotów w przeglądarce. Wpisujesz słowo, a rój układa napis, a potem kształt tej rzeczy. Pokazuje, jak daleko da się zajść bez instalowania czegokolwiek.</p>
+          </div>
+        </div>
       </article>
 
       <div class="work-cta rv">
@@ -948,6 +977,69 @@ footer{border-top:1px solid var(--line);padding-block:56px calc(40px + env(safe-
   addEventListener('scroll', function(){ requestAnimationFrame(focusPhoto) }, {passive:true});
   addEventListener('resize', focusPhoto); focusPhoto();
 
+  /* rój nanobotów w hero: dryfuje, krąży wokół kursora, nie podchodzi bliżej niż ~40 px */
+  (function(){
+    var cv = d.getElementById('swarm'); if (!cv || !cv.getContext) return;
+    var ctx = cv.getContext('2d'), W = 0, H = 0, P = [], NUM = fine ? 520 : 200;
+    var mouse = {x:0, y:0, on:false}, running = false, visible = true, raf = 0, t0 = performance.now();
+    function seed(){
+      P = [];
+      for (var i=0;i<NUM;i++){
+        var hx = .12 + .88*Math.sqrt(Math.random()), hy = Math.random();
+        P.push({hx:hx, hy:hy, x:hx*W, y:hy*H, vx:0, vy:0,
+          s: Math.random()<.12 ? 2.4 : 1.2 + Math.random()*1.1,
+          a: .12 + Math.random()*.4, blue: Math.random()<.2,
+          ph: Math.random()*6.283, r0: 46 + Math.random()*110, dir: Math.random()<.5?-1:1, sp: .35 + Math.random()*.7});
+      }
+    }
+    function resize(){
+      var r = hero.getBoundingClientRect(), dpr = Math.min(window.devicePixelRatio||1, 2);
+      W = r.width; H = r.height; cv.width = Math.round(W*dpr); cv.height = Math.round(H*dpr);
+      ctx.setTransform(dpr,0,0,dpr,0,0);
+      if (!P.length) seed();
+      if (reduce) draw(performance.now());
+    }
+    function draw(now){
+      var t = now - t0; ctx.clearRect(0,0,W,H);
+      var R = 260;
+      for (var i=0;i<P.length;i++){
+        var p = P[i];
+        var tx = p.hx*W + Math.sin(t*.00035*p.sp + p.ph)*16, ty = p.hy*H + Math.cos(t*.00042*p.sp + p.ph*1.3)*16, w = 0;
+        if (mouse.on){
+          var dx = p.x - mouse.x, dy = p.y - mouse.y, dist = Math.sqrt(dx*dx + dy*dy);
+          if (dist < R){
+            w = 1 - dist/R; w = w*w*(3-2*w);
+            var th = p.ph + t*.00055*p.dir*p.sp, rr = p.r0 + Math.sin(t*.0011 + p.ph)*10;
+            tx += (mouse.x + Math.cos(th)*rr - tx) * w * .92;
+            ty += (mouse.y + Math.sin(th)*rr - ty) * w * .92;
+            if (dist < 40){ var f = (40-dist)/40*1.4; p.vx += dx/(dist||1)*f; p.vy += dy/(dist||1)*f; }
+          }
+        }
+        if (!reduce){
+          p.vx += (tx - p.x) * .011; p.vy += (ty - p.y) * .011;
+          p.vx *= .9; p.vy *= .9; p.x += p.vx; p.y += p.vy;
+        }
+        ctx.globalAlpha = Math.min(1, p.a + w*.55);
+        ctx.fillStyle = p.blue || w > .55 ? '#5b8cff' : '#c3cde6';
+        ctx.fillRect(p.x, p.y, p.s, p.s);
+      }
+      ctx.globalAlpha = 1;
+    }
+    function loop(now){ draw(now); raf = requestAnimationFrame(loop); }
+    function start(){ if (!running && visible && !reduce && !d.hidden){ running = true; raf = requestAnimationFrame(loop); } }
+    function stop(){ running = false; cancelAnimationFrame(raf); }
+    resize(); start();
+    addEventListener('resize', function(){ resize(); });
+    new IntersectionObserver(function(es){ visible = es[0].isIntersecting; visible ? start() : stop(); }).observe(hero);
+    d.addEventListener('visibilitychange', function(){ d.hidden ? stop() : start(); });
+    hero.addEventListener('pointermove', function(e){ var r = hero.getBoundingClientRect(); mouse.x = e.clientX - r.left; mouse.y = e.clientY - r.top; mouse.on = true; });
+    hero.addEventListener('pointerleave', function(){ mouse.on = false; });
+    hero.addEventListener('pointerdown', function(e){
+      var r = hero.getBoundingClientRect(), mx = e.clientX - r.left, my = e.clientY - r.top;
+      for (var i=0;i<P.length;i++){ var p = P[i], dx = p.x-mx, dy = p.y-my, dd = Math.sqrt(dx*dx+dy*dy); if (dd < 220){ var f = (220-dd)/220*9; p.vx += dx/(dd||1)*f; p.vy += dy/(dd||1)*f; } }
+    });
+  })();
+
   /* FAQ */
   d.querySelectorAll('.qa button').forEach(function(b){
     b.addEventListener('click', function(){
@@ -957,13 +1049,6 @@ footer{border-top:1px solid var(--line);padding-block:56px calc(40px + env(safe-
   });
 
   if (fine && !reduce){
-    /* poświata w hero za kursorem */
-    var glow = d.querySelector('.glow');
-    hero.addEventListener('pointermove', function(e){
-      var r = hero.getBoundingClientRect();
-      glow.style.setProperty('--gx-pos', (e.clientX - r.left)+'px');
-      glow.style.setProperty('--gy-pos', (e.clientY - r.top)+'px');
-    });
     /* magnetyczne przyciski */
     d.querySelectorAll('.mag').forEach(function(b){
       b.addEventListener('pointermove', function(e){
@@ -1011,6 +1096,7 @@ footer{border-top:1px solid var(--line);padding-block:56px calc(40px + env(safe-
     var c = contactIn.value.trim();
     if (!/@/.test(c) && c.replace(/\D/g,'').length < 9){ err.textContent='Podaj numer telefonu (9 cyfr) albo adres e-mail, żebym mógł odpowiedzieć.'; contactIn.focus(); return; }
     send.classList.add('loading'); send.disabled = true;
+    if (location.protocol === 'file:'){ setTimeout(function(){ send.classList.remove('loading'); send.disabled = false; err.textContent = 'Strona jest otwarta z pliku na dysku. Formularz wysyła wiadomości dopiero ze strony w internecie (np. GitHub Pages).'; }, 400); return; }
     if (/claude\.ai|claudeusercontent/.test(location.hostname)){ setTimeout(function(){ d.getElementById('done-txt').textContent='To podgląd strony. Na prawdziwej stronie wiadomość trafi na Twój e-mail.'; finish(true) }, 900); return; }
     var payload = {
       wiadomosc: msg.value.trim(), kontakt: c,
