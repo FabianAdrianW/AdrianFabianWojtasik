@@ -54,7 +54,7 @@
   color-scheme:dark;
 }
 *,*::before,*::after{box-sizing:border-box}
-html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;scroll-padding-top:calc(var(--navh,84px) + 28px)}
 body{margin:0;background:var(--bg);color:var(--fg);font:400 16px/1.6 var(--f-body);-webkit-font-smoothing:antialiased;overflow-x:hidden}
 body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:var(--bg)}
 img{max-width:100%;display:block}
@@ -943,6 +943,23 @@ footer{border-top:1px solid var(--line);padding-block:56px calc(40px + env(safe-
   }
 
   /* nav: przyklejanie, postęp, aktywna sekcja */
+  function setNavH(){ var ni=d.querySelector('.nav-in'); if(ni) root.style.setProperty('--navh', Math.round(ni.getBoundingClientRect().bottom)+'px'); }
+  setNavH(); addEventListener('resize', setNavH);
+  /* kotwice: treść sekcji zaczyna się tuż pod navbarem */
+  d.addEventListener('click', function(e){
+    var a = e.target.closest && e.target.closest('a[href^="#"]'); if(!a) return;
+    var id = a.getAttribute('href').slice(1); if(!id) return;
+    var sec = d.getElementById(id); if(!sec || sec.tagName === 'SYMBOL') return;
+    var t = sec.querySelector('.contact-box, .eyebrow') || sec;
+    var nb = d.querySelector('.nav-in').getBoundingClientRect().bottom;
+    var tr = getComputedStyle(t).transform, ty = 0;
+    if (tr && tr !== 'none') ty = new DOMMatrix(tr).m42 * (parseFloat(getComputedStyle(d.querySelector('main')).zoom) || 1);
+    var y = t.getBoundingClientRect().top - ty + scrollY - nb - 28;
+    if (id === 'top') y = 0;
+    e.preventDefault();
+    scrollTo({top: Math.max(0, y), behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'});
+    history.replaceState(null, '', '#' + id);
+  });
   var nav = d.getElementById('nav'), prog = d.querySelector('.progress'), mbar = d.getElementById('mbar');
   var hero = d.getElementById('hero'), contact = d.getElementById('kontakt');
   function Z(){ return parseFloat(getComputedStyle(d.querySelector('main')).zoom) || 1 }
